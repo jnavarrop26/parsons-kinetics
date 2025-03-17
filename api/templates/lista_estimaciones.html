@@ -1,0 +1,207 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Lista de Estimaciones{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<h1 class="title">Estimation List</h1>
+
+<div class="data-container">
+    <div class="data-titles">
+        <div class="title-item">Details</div>
+        <div class="title-item">Name</div>
+        <div class="title-item">Latitude</div>
+        <div class="title-item">Longitude</div>
+        <div class="title-item">Start Date</div>
+        <div class="title-item">End Date</div>
+        <div class="title-item">Created At</div>
+        <div class="title-item">Delete</div>
+    </div>
+    <div class="data-rows">
+        {% for consulta in consultas %}
+        <div class="data-row">
+            <div class="data-item">
+                <span class="toggle-details" data-id="{{ forloop.counter }}">
+                    &gt;
+                </span>
+            </div>
+            <div class="data-item">{{ consulta.name }}</div>
+            <div class="data-item">{{ consulta.lat }}</div>
+            <div class="data-item">{{ consulta.lon }}</div>
+            <div class="data-item">{{ consulta.start_date }}</div>
+            <div class="data-item">{{ consulta.end_date }}</div>
+            <div class="data-item">{{ consulta.created_at }}</div>
+            <div class="data-item">
+                <form action="{% url 'eliminar_consulta' consulta.id %}" method="POST" onsubmit="return confirmarEliminacion();">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">
+                        <img src="{% static '/images/delete.png' %}" alt="Delete" class="delete-icon">
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="details-row hidden" id="details-{{ forloop.counter }}">
+            <div class="chart-container">
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Datos del Lugar</h3>
+                            <p><strong>Elevación:</strong> {{ consulta.elevation }} m</p>
+                            <p><strong>Densidad del Aire:</strong> {{ consulta.air_density }} kg/m³</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Serie de Tiempo</h3>
+                            <p>Velocidad del viento a 10 metros a lo largo del tiempo.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.wind_speed_timeseries_base64 }}" alt="Serie Temporal de Velocidad del Viento">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Distribución de Velocidad</h3>
+                            <p>Frecuencia de diferentes velocidades del viento.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.wind_speed_distribution_base64 }}" alt="Distribución de Velocidad">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Distribución Acumulada</h3>
+                            <p>Distribuciones acumuladas de velocidad del viento.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.wind_distribucion_acumulada_base64 }}" alt="Distribución Acumulada">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Roseta de Viento (10m)</h3>
+                            <p>Direcciones del viento a 10 metros.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.wind_rose_10m_base64 }}" alt="Roseta de Viento a 10m">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Roseta de Viento (100m)</h3>
+                            <p>Direcciones del viento a 100 metros.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.wind_rose_100m_base64 }}" alt="Roseta de Viento a 100m">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Curvas de Weibull</h3>
+                            <p>Distribución de Weibull para velocidades del viento.</p>
+                            <p><strong>Parámetros a 10m:</strong> {{ consulta.weibull_params_10m }}</p>
+                            <p><strong>Parámetros a 100m:</strong> {{ consulta.weibull_params_100m }}</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.weibull_curves_base64 }}" alt="Curvas de Weibull">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Distribución Weibull</h3>
+                            <p>Distribución ajustada de Weibull para el lugar.</p>
+                            <p><strong>Parámetros (20m):</strong> {{ consulta.weibull_params_hm }}</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.weibull_distribution_base64 }}" alt="Distribución Weibull">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Eficiencia del Aerogenerador</h3>
+                            <p>Curva de eficiencia según las velocidades del viento.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.eficiencia_generador_base64 }}" alt="Eficiencia del Generador">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Potencia del Viento</h3>
+                            <p>Potencia disponible según la velocidad y densidad del aire.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.potencia_viento_base64 }}" alt="Potencia del Viento">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Potencia de la Turbina</h3>
+                            <p>Curva de potencia generada por la turbina.</p>
+                            <p><strong>Potencia Máxima:</strong> {{ consulta.potencia_max }} W</p>
+                            <p><strong>Potencia Promedio:</strong> {{ consulta.potencia_promedio }} W</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.potencia_turbina_base64 }}" alt="Potencia de la Turbina">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="chart-card">
+                    <div class="chart-content">
+                        <div class="chart-text">
+                            <h3>Potencia Acumulada</h3>
+                            <p>Potencia total generada en el período de estudio.</p>
+                        </div>
+                        <div class="chart-image">
+                            <img src="data:image/png;base64,{{ consulta.potencia_acumulada_base64 }}" alt="Potencia Acumulada">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="data-row no-data">
+            <div class="data-item" colspan="8">No data available</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function confirmarEliminacion() {
+        return confirm("¿Está segur@ de que desea eliminar esta estimación? Esta acción no se puede deshacer.");
+    }
+</script>
+{% endblock %}
