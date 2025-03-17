@@ -1,0 +1,527 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif, 'Lato';
+    box-sizing: border-box;
+}
+
+/* Barra superior */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 80px;
+}
+
+.topbar .menu-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+}
+
+.topbar .logo {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.topbar .logo img {
+    height: 70px;
+    max-height: 80px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-right: 120px;
+    object-fit: contain;
+    position: relative;
+    
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: left 0.8s ease;
+    z-index: 1100;
+    visibility: hidden;
+    font-family: 'Lato', sans-serif;
+}
+
+.sidebar.open {
+    left: 0;
+    visibility: visible;
+}
+
+.sidebar .menu-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    align-self: flex-end;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: left 0.8s ease;
+    visibility: hidden;
+}
+
+.sidebar .menu-items {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu-items li {
+    margin: 40px 0;
+}
+
+.sidebar .menu-items li a {
+    display: flex;
+    align-items: center;
+    color: #333333;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar .menu-items li a i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Main Content */
+.main-content {
+    margin: 0 auto;
+    padding-top: 100px; 
+    transition: margin-left 0.3s ease; 
+    max-width: 1200px;
+}
+
+.main-content.collapsed {
+    margin-left: 70px; 
+    transition: margin-left 0.3s ease;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.card h2 {
+    margin: 0 0 10px 0;
+}
+
+.card .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #989898;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.card .btn:hover {
+    background-color: #0066cc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .sidebar.collapsed {
+        width: 250px;
+        padding: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .main-content.collapsed {
+        margin-left: 250px;
+    }
+}
+
+/* Contenedor Principal del Formulario */
+.form-container {
+    width: 100%;
+    max-width: 400px; /* Ancho máximo */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más destacada */
+    font-family: Arial, sans-serif; /* Fuente limpia */
+}
+
+/* Fondo General */
+body {
+    background-color: #f5f5f5; /* Fondo gris claro para mayor contraste */
+}
+/* Título del Formulario */
+.form-container h2 {
+    font-size: 22px; /* Ajusta el tamaño */
+    font-weight: bold;
+    margin-bottom: 25px; /* Espaciado debajo */
+    text-align: left; /* Alineado a la izquierda */
+    color: #000; /* Negro para más contraste */
+}
+
+/* Grupos de Campos */
+.form-group {
+    margin-bottom: 25px; /* Espaciado entre campos */
+}
+
+/* Etiquetas */
+.form-group label {
+    display: block; /* Forzar alineación vertical */
+    font-weight: bold;
+    font-size: 14px;
+    color: #313131; /* Gris oscuro */
+    margin-bottom: 5px; /* Espaciado entre etiqueta y campo */
+}
+
+/* Campos de Entrada */
+.form-group input {
+    width: 100%; /* Campo ocupa todo el ancho */
+    padding: 12px; /* Más espacio interno */
+    border: 1px solid #d3d3d3; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 14px; /* Texto más legible */
+    box-sizing: border-box; /* Incluir padding en el ancho total */
+    color: #313131; /* Texto gris oscuro */
+    outline: none; /* Eliminar bordes predeterminados */
+    transition: border-color 0.3s ease; /* Transición para el enfoque */
+}
+
+.form-group input:focus {
+    border-color: #0056b3; /* Azul oscuro al enfocar */
+}
+
+/* Texto de Ayuda Debajo de los Campos */
+.form-group small {
+    font-size: 12px; /* Texto pequeño */
+    color: #6c757d; /* Gris claro */
+    margin-top: 5px;
+    display: block;
+}
+
+/* Botón de Envío */
+.btn-submit {
+    display: block;
+    width: 100%; /* Botón ocupa todo el ancho */
+    padding: 12px;
+    background-color: #000000; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    font-size: 16px; /* Tamaño más grande */
+    font-weight: bold; /* Negrita */
+    text-align: center;
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Indicar que es clickeable */
+    transition: background-color 0.3s ease; /* Animación suave */
+}
+
+
+.btn-submit:hover {
+    background-color: #313131; /* Fondo gris oscuro al pasar el cursor */
+}
+
+/* Espaciado entre las secciones */
+.form-container {
+    margin-top: 40px; /* Para dar espacio desde el encabezado */
+}
+
+/* Estilo general para títulos */
+.title {
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 24px; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    color: #313131; /* Color del texto */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+
+
+/* Estilo para las tablas de las listas de estimaciones*/
+
+/* Contenedor Principal */
+.data-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd; /* Borde alrededor del contenedor */
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Títulos */
+.data-titles {
+    display: flex; /* Alinear títulos en fila */
+    background-color: #f4f4f4; /* Fondo gris claro para títulos */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.title-item {
+    flex: 1; /* Cada título ocupa el mismo espacio */
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Filas de Datos */
+.data-rows {
+    display: flex;
+    flex-direction: column; /* Cada fila de datos estará apilada */
+}
+
+.data-row {
+    display: flex; /* Alinear los datos en fila */
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
+}
+
+.data-row:last-child {
+    border-bottom: none; /* Eliminar línea divisoria de la última fila */
+}
+
+.data-item {
+    flex: 1; /* Cada dato ocupa el mismo espacio */
+    text-align: center;
+    color: #555; /* Color de texto más claro */
+}
+
+/* Hover en las filas */
+.data-row:hover {
+    background-color: #f9f9f9; /* Fondo más claro al pasar el cursor */
+}
+
+.details-row {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+.details p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Main Content */
+.main-content {
+    padding-top: 120px;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Data Table */
+.data-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.data-titles {
+    display: flex;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.title-item {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.data-rows {
+    display: flex;
+    flex-direction: column;
+}
+
+.data-row {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-row:last-child {
+    border-bottom: none;
+}
+
+.data-item {
+    flex: 1;
+    text-align: center;
+    color: #555;
+}
+
+.data-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Toggle Details */
+.toggle-details {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-details.expanded {
+    transform: rotate(90deg);
+}
+
+.details-row.visible {
+    display: block;
+    opacity: 1;
+}
+
+.hidden {
+    max-height: 0;
+    overflow: hidden; 
+    opacity: 0;
+}
+
+.details-row {
+    max-height: 0; 
+    overflow: hidden;
+    opacity: 0; 
+    transition: max-height 0.5s ease, opacity 0.5s ease; 
+}
+
+.details-row.visible {
+    max-height: 5000px; 
+    opacity: 1;
+    overflow-y: auto; 
+}
+
+.data-item {
+    text-align: center; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.delete-button {
+    margin-left: 10px; 
+    background: none; 
+    border: none; 
+    padding: 0; 
+}
+
+.delete-icon {
+    width: 24px; 
+    height: 24px;
+    margin: 5px; 
+    cursor: pointer; 
+}
+
+button.delete-button:hover .delete-icon {
+    opacity: 0.7; 
+}
+
+/* Contenedor General */
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre las tarjetas */
+    margin: 20px;
+}
+
+/* Tarjetas */
+.chart-card {
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 20px;
+}
+
+/* Contenido de la Tarjeta */
+.chart-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px; /* Espacio entre texto y gráfica */
+}
+
+/* Texto de la Tarjeta */
+.chart-text {
+    flex: 1;
+}
+
+.chart-text h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333; /* Gris oscuro */
+    margin-bottom: 10px;
+}
+
+.chart-text p {
+    font-size: 14px;
+    color: #666666; /* Gris claro */
+}
+
+/* Imagen de la Gráfica */
+.chart-image {
+    flex: 1;
+    text-align: center;
+}
+
+.chart-image img {
+    max-width: 100%; /* Imagen ajustada al ancho disponible */
+    height: auto; /* Mantener proporción */
+    border-radius: 5px; /* Bordes redondeados */
+}

@@ -1,0 +1,84 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<h2 class="title">Weather Data Entry</h2>
+
+<div class="form-container">
+    <form action="{% url 'consulta' %}" method="POST">
+        {% csrf_token %}
+        
+        <!-- Campo para Nombre -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                placeholder="Enter name" 
+                maxlength="100" 
+                required>
+            <small>Enter a name (maximum 100 characters).</small>
+        </div>
+
+        <!-- Campo para Latitud -->
+        <div class="form-group">
+            <label for="lat">Latitude</label>
+            <input 
+                type="number" 
+                id="lat" 
+                name="lat" 
+                placeholder="Enter latitude" 
+                step="0.0000001" 
+                min="-90" 
+                max="90" 
+                required>
+            <small>Enter a value between -90 and 90 degrees.</small>
+        </div>
+    
+        <!-- Campo para Longitud -->
+        <div class="form-group">
+            <label for="lon">Longitude</label>
+            <input 
+                type="number" 
+                id="lon" 
+                name="lon" 
+                placeholder="Enter longitude" 
+                step="0.0000001" 
+                min="-180" 
+                max="180" 
+                required>
+            <small>Enter a value between -180 and 180 degrees.</small>
+        </div>
+    
+        <!-- Campo para Fecha de Inicio -->
+        <div class="form-group">
+            <label for="start_date">Start Date</label>
+            <input 
+                type="date" 
+                id="start_date" 
+                name="start_date" 
+                required>
+            <small>Enter the start date for the estimation period.</small>
+        </div>
+    
+        <!-- Campo para Fecha de Fin -->
+        <div class="form-group">
+            <label for="end_date">End Date</label>
+            <input 
+                type="date" 
+                id="end_date" 
+                name="end_date" 
+                required>
+            <small>Enter the end date for the estimation period.</small>
+        </div>
+        
+        <!-- Botón de Envío -->
+        <button type="submit" class="btn-submit">Submit</button>
+    </form>
+</div>
+
+
+
+
+{% endblock %}

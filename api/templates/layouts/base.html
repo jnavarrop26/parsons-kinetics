@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas</title>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra Superior -->
+    <header class="topbar">
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+        </div>
+    </header>
+
+<!-- Barra Lateral -->
+<nav class="sidebar" id="sidebar">
+    <button class="menu-close" id="menuClose">
+        <i class="fa fa-times"></i>
+    </button>
+    <ul class="menu-items">
+        <li><a href="{% url 'index' %}"><i></i> <span>HOME</span></a></li>
+        <li><a href="{% url 'consulta' %}"><i></i> <span>NEW CONSULT</span></a></li>
+        <li><a href="{% url 'lista' %}"><i></i> <span>ESTIMATION LIST</span></a></li>
+    </ul>
+</nav>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main-content" id="mainContent">
+    {% block content %}
+    {% endblock %}
+</main>
+
+    <script src="{% static 'scripts/main.js' %}"></script>
+</body>
+</html>
